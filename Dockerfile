@@ -1,6 +1,6 @@
 FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
 ENV LANG C.UTF-8
-RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
+RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
     GIT_CLONE="git clone --depth 1" && \
 
@@ -27,12 +27,13 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
         unrar \
         zsh \
         vim \
+        cmake \
         && \
 
-    $GIT_CLONE https://github.com/Kitware/CMake ~/cmake && \
-    cd ~/cmake && \
-    ./bootstrap && \
-    make -j"$(nproc)" install && \
+#    $GIT_CLONE https://github.com/Kitware/CMake ~/cmake && \
+#    cd ~/cmake && \
+#    ./bootstrap && \
+#    make -j"$(nproc)" install && \
 
 
 # ==================================================================
@@ -67,6 +68,7 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
         matplotlib \
         Cython \
         tqdm \
+        opencv-contrib-python \
         && \
 
 # ==================================================================
@@ -76,23 +78,6 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
     $PIP_INSTALL \
         jupyterlab \
         notebook \
-        && \
-
-# ==================================================================
-# onnx
-# ------------------------------------------------------------------
-
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
-        protobuf-compiler \
-        libprotoc-dev \
-        && \
-
-    $PIP_INSTALL \
-        --no-binary onnx onnx \
-        && \
-
-    $PIP_INSTALL \
-        onnxruntime \
         && \
 
 # ==================================================================
@@ -120,7 +105,7 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
 # ------------------------------------------------------------------
 
     $PIP_INSTALL \
-        tensorflow-gpu==2.4.0 \
+        tensorflow==2.4.1 \
         && \
 
 # ==================================================================
@@ -128,40 +113,9 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
 # ------------------------------------------------------------------
 
     $PIP_INSTALL \
-        h5py \
+#        h5py \
         keras \
         && \
-
-# ==================================================================
-# opencv
-# ------------------------------------------------------------------
-
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
-        libatlas-base-dev \
-        libgflags-dev \
-        libgoogle-glog-dev \
-        libhdf5-serial-dev \
-        libleveldb-dev \
-        liblmdb-dev \
-        libprotobuf-dev \
-        libsnappy-dev \
-        protobuf-compiler \
-        && \
-
-    $GIT_CLONE --branch 4.5.1 https://github.com/opencv/opencv ~/opencv && \
-    mkdir -p ~/opencv/build && cd ~/opencv/build && \
-    cmake -D CMAKE_BUILD_TYPE=RELEASE \
-          -D CMAKE_INSTALL_PREFIX=/usr/local \
-          -D WITH_IPP=OFF \
-          -D WITH_CUDA=OFF \
-          -D WITH_OPENCL=OFF \
-          -D BUILD_TESTS=OFF \
-          -D BUILD_PERF_TESTS=OFF \
-          -D BUILD_DOCS=OFF \
-          -D BUILD_EXAMPLES=OFF \
-          .. && \
-    make -j"$(nproc)" install && \
-    ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2 && \
 
 # ==================================================================
 # Frameworks / Libraries (ML)
@@ -171,7 +125,17 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
 # detectron2: PyTorch object detection framework
 # od: Tensorflow object detection API
 # vissl: Self-Supervised learning framework for PyTorch
+# apex:
+# onnx:
+# horovod: 
 # ------------------------------------------------------------------
+
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+        protobuf-compiler \
+        libprotoc-dev \
+        ninja-build \
+        && \
+
 
     $GIT_CLONE https://github.com/tensorflow/models.git ~/models && \
     cd ~/models/research && \
@@ -179,17 +143,18 @@ RUN APT_INSTALL="apt-get isntall -y --no-install-recommends" && \
     cp object_detection/packages/tf2/setup.py . && \
     $PIP_INSTALL --use-feature=2020-resolver . && \
 
-    $GIT_CLONE git clone https://github.com/NVIDIA/apex ~/apex && \
-    cd ~/apex && \
-    $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
+#    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
+#    cd ~/apex && \
+#    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
-    $PIP_INSTALL \
+    HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
         seaborn \
         vissl \
+        horovod \
         'git+https://github.com/facebookresearch/detectron2.git' \
+	--no-binary onnx onnx \
         && \
-
 
 # ==================================================================
 # Additional Tools (ML)
