@@ -126,7 +126,6 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 # od: Tensorflow object detection API
 # vissl: Self-Supervised learning framework for PyTorch
 # apex:
-# onnx:
 # horovod: 
 # ------------------------------------------------------------------
 
@@ -153,7 +152,6 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         vissl \
         horovod \
         'git+https://github.com/facebookresearch/detectron2.git' \
-	--no-binary onnx onnx \
         && \
 
 # ==================================================================
