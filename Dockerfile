@@ -1,7 +1,7 @@
 FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
 ENV LANG C.UTF-8
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
-    PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
+    PIP_INSTALL="python -m pip --no-cache-dir --use-deprecated=legacy-resolver install --upgrade " && \
     GIT_CLONE="git clone --depth 1" && \
 
     rm -rf /var/lib/apt/lists/* \
@@ -141,7 +141,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     cd ~/models/research && \
     protoc object_detection/protos/*.proto --python_out=. && \
     cp object_detection/packages/tf2/setup.py . && \
-    $PIP_INSTALL --use-feature=2020-resolver . && \
+    $PIP_INSTALL . && \
 
 #    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
 #    cd ~/apex && \
