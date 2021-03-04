@@ -149,7 +149,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
         seaborn \
-        vissl \
+        # vissl \
         horovod \
         'git+https://github.com/facebookresearch/detectron2.git' \
         && \
