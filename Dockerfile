@@ -35,6 +35,53 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 #    ./bootstrap && \
 #    make -j"$(nproc)" install && \
 
+# ==================================================================
+# Additional Tools (Misc)
+# ------------------------------------------------------------------
+# Tools I prefer personally, nothing is mandatory
+# ------------------------------------------------------------------
+# tmux: Terminal multiplexer
+# bat: Inhanced cat
+# fzf: Commandline fuzzy finder
+# exa: Inhanced ls
+# broot: Inhanced tree
+# ripgrep: Inhanced grep
+# ------------------------------------------------------------------
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
+
+
+    $APT_INSTALL \
+        tmux \
+        && \
+
+    wget https://github.com/sharkdp/bat/releases/download/v0.18.0/bat_0.18.0_amd64.deb && \
+    dpkg -i bat_0.18.0_amd64.deb && \
+    rm -f bat_0.18.0_amd64.deb && \
+ 
+    wget https://dystroy.org/broot/download/x86_64-linux/broot -O /usr/local/bin/broot && \
+    chmod +x /usr/local/bin/broot && \ 
+
+    wget https://github.com/ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip && \
+    unzip exa-linux-x86_64-0.9.0.zip && \
+    rm -f exa-linux-x86_64-0.9.0.zip && \
+    mv exa-linux-x86_64 /usr/local/bin/exa && \
+    chmod +x /usr/local/bin/exa && \
+
+    wget https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb && \
+    dpkg -i ripgrep_12.1.1_amd64.deb && \
+    rm -f ripgrep_12.1.1_amd64.deb && \
+
+    $GIT_CLONE https://github.com/junegunn/fzf.git ~/.fzf && \
+    yes | ~/.fzf/install && \
+
+    $GIT_CLONE https://github.com/zsh-users/zsh-autosuggestions $ZSH/plugins/zsh-autosuggestions && \
+    $GIT_CLONE https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
+
+    wget https://github.com/ryanking13/dotfiles/blob/master/.vimrc ~/.vimrc && \
+    wget https://github.com/ryanking13/dotfiles/blob/master/.zshrc ~/.zshrc && \
+
+    vim -c 'qa!' && \
 
 # ==================================================================
 # python
@@ -127,6 +174,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 # vissl: Self-Supervised learning framework for PyTorch
 # apex:
 # horovod: 
+# timm:
 # ------------------------------------------------------------------
 
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
@@ -151,6 +199,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         seaborn \
         # vissl \
         horovod \
+        timm \
         'git+https://github.com/facebookresearch/detectron2.git' \
         && \
 
@@ -167,55 +216,6 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         pycocotools \
         gpustat \
         && \
-
-
-# ==================================================================
-# Additional Tools (Misc)
-# ------------------------------------------------------------------
-# Tools I prefer personally, nothing is mandatory
-# ------------------------------------------------------------------
-# tmux: Terminal multiplexer
-# bat: Inhanced cat
-# fzf: Commandline fuzzy finder
-# exa: Inhanced ls
-# broot: Inhanced tree
-# ripgrep: Inhanced grep
-# ------------------------------------------------------------------
-
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
-
-
-    $APT_INSTALL \
-        tmux \
-        && \
-
-    wget https://github.com/sharkdp/bat/releases/download/v0.18.0/bat_0.18.0_amd64.deb && \
-    dpkg -i bat_0.18.0_amd64.deb && \
-    rm -f bat_0.18.0_amd64.deb && \
- 
-    wget https://dystroy.org/broot/download/x86_64-linux/broot /usr/local/bin/broot && \
-    chmod +x /usr/local/bin/broot && \ 
-
-    wget https://github.com/ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip && \
-    unzip exa-linux-x86_64-0.9.0.zip && \
-    rm -f exa-linux-x86_64-0.9.0.zip && \
-    mv exa-linux-x86_64 /usr/local/bin/exa && \
-    chmod +x /usr/local/bin/exa && \
-
-    wget https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb && \
-    dpkg -i ripgrep_12.1.1_amd64.deb && \
-    rm -f ripgrep_12.1.1_amd64.deb && \
-
-    $GIT_CLONE https://github.com/junegunn/fzf.git ~/.fzf && \
-    yes | ~/.fzf/install && \
-
-    $GIT_CLONE https://github.com/zsh-users/zsh-autosuggestions $ZSH/plugins/zsh-autosuggestions && \
-    $GIT_CLONE https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
-
-    wget https://github.com/ryanking13/dotfiles/blob/master/.vimrc ~/.vimrc && \
-    wget https://github.com/ryanking13/dotfiles/blob/master/.zshrc ~/.zshrc && \
-
-    vim -c 'qa!' && \
 
 # ==================================================================
 # config & cleanup
