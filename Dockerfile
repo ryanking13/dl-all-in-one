@@ -1,7 +1,7 @@
 FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
 ENV LANG C.UTF-8
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
-    PIP_INSTALL="python -m pip --no-cache-dir --use-deprecated=legacy-resolver install --upgrade " && \
+    PIP_INSTALL="python -m pip --no-cache-dir --use-deprecated=legacy-resolver install --upgrade -vvv" && \
     GIT_CLONE="git clone --depth 1" && \
 
     rm -rf /var/lib/apt/lists/* \
