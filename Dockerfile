@@ -78,8 +78,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $GIT_CLONE https://github.com/zsh-users/zsh-autosuggestions $ZSH/plugins/zsh-autosuggestions && \
     $GIT_CLONE https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
 
-    wget https://github.com/ryanking13/dotfiles/blob/master/.vimrc -O ~/.vimrc && \
-    wget https://github.com/ryanking13/dotfiles/blob/master/.zshrc -O ~/.zshrc && \
+    wget https://raw.githubusercontent.com/ryanking13/dotfiles/master/.vimrc -O ~/.vimrc && \
+    wget https://raw.githubusercontent.com/ryanking13/dotfiles/master/.zshrc -O ~/.zshrc && \
 
     vim -c 'qa!' && \
 
