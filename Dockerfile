@@ -186,10 +186,13 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 
 
     $APT_INSTALL \
-        bat \
         tmux \
         && \
 
+    wget https://github.com/sharkdp/bat/releases/download/v0.18.0/bat_0.18.0_amd64.deb && \
+    dpkg -i bat_0.18.0_amd64.deb && \
+    rm -f bat_0.18.0_amd64.deb && \
+ 
     wget https://dystroy.org/broot/download/x86_64-linux/broot /usr/local/bin/broot && \
     chmod +x /usr/local/bin/broot && \ 
 
