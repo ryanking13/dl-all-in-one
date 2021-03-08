@@ -142,9 +142,9 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     cp object_detection/packages/tf2/setup.py . && \
     $PIP_INSTALL . && \
 
-#    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
-#    cd ~/apex && \
-#    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
+    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
+    cd ~/apex && \
+    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
     HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
@@ -188,12 +188,20 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $APT_INSTALL \
         bat \
         tmux \
-        exa \
-        ripgrep \
         && \
 
     wget https://dystroy.org/broot/download/x86_64-linux/broot /usr/local/bin/broot && \
     chmod +x /usr/local/bin/broot && \ 
+
+    wget https://github.com/ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip && \
+    unzip exa-linux-x86_64-0.9.0.zip && \
+    rm -f exa-linux-x86_64-0.9.0.zip && \
+    mv exa-linux-x86_64 /usr/local/bin/exa && \
+    chmod +x /usr/local/bin/exa && \
+
+    wget https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb && \
+    dpkg -i ripgrep_12.1.1_amd64.deb && \
+    rm -f ripgrep_12.1.1_amd64.deb && \
 
     $GIT_CLONE https://github.com/junegunn/fzf.git ~/.fzf && \
     yes | ~/.fzf/install && \
