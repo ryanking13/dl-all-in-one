@@ -110,7 +110,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         scipy \
         pandas \
         cloudpickle \
-        scikit-image>=0.14.2 \
+        scikit-image \
         scikit-learn \
         matplotlib \
         Cython \
