@@ -96,11 +96,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         python3.8 \
         python3.8-dev \
         python3-distutils-extra \
-        libhdf5-dev \
-        libatlas-base-dev \
-        libjasper-dev \
-        libqtgui4 \
-        libqt4-test \
+        python3-opencv \
         && \
     wget -O ~/get-pip.py \
         https://bootstrap.pypa.io/get-pip.py && \
@@ -120,7 +116,6 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         matplotlib \
         Cython \
         tqdm \
-        opencv-conrtib-python \
         && \
 
 # ==================================================================
