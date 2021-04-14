@@ -115,6 +115,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         matplotlib \
         Cython \
         tqdm \
+        opencv-python \
         opencv-contrib-python \
         && \
 
