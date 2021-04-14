@@ -1,10 +1,7 @@
+
 ```
-sudo dd if=/dev/zero of=/swapfile bs=64M count=16
-sudo mkswap /swapfile
-sudo swapon /swapfile
-
-sudo swapoff /swapfile
-sudo rm /swapfile
-docker build . -t allinone:1.0
-
+cat ~/TOKEN.txt | docker login https://docker.pkg.github.com -u USERNAME --password-stdin
+docker build . -t allinone
+docker tag allinone docker.pkg.github.com/ryanking13/dl-all-in-one/allinone:VERSION
+docker push docker.pkg.github.com/ryanking13/dl-all-in-one/allinone:VERSION
 ```

@@ -96,6 +96,11 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         python3.8 \
         python3.8-dev \
         python3-distutils-extra \
+        libhdf5-dev \
+        libatlas-base-dev \
+        libjasper-dev \
+        libqtgui4 \
+        libqt4-test \
         && \
     wget -O ~/get-pip.py \
         https://bootstrap.pypa.io/get-pip.py && \
@@ -115,8 +120,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         matplotlib \
         Cython \
         tqdm \
-        opencv-python \
-        opencv-contrib-python \
+        opencv-conrtib-python \
         && \
 
 # ==================================================================
@@ -197,7 +201,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 
     HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
-        pl-bolts \
+        lightning-bolts \
         seaborn \
         # vissl \
         horovod \
