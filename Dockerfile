@@ -195,7 +195,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
     #!  mmcv version must be changed when torch version changes
-    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" $PIP_INSTALLmmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html && \
+    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" $PIP_INSTALL mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html && \
 
     TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
