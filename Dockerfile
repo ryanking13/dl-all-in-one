@@ -202,6 +202,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         horovod \
         timm \
         'git+https://github.com/facebookresearch/detectron2.git' \
+        mmdet \
         && \
 
 # ==================================================================
