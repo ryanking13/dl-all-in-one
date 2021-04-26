@@ -194,7 +194,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     cd ~/apex && \
     TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
-    FORCE_CUDA="1" HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
+    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
         lightning-bolts \
         seaborn \
