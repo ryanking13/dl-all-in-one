@@ -187,9 +187,9 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     cp object_detection/packages/tf2/setup.py . && \
     $PIP_INSTALL . && \
 
-    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
-    cd ~/apex && \
-    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
+    # $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
+    # cd ~/apex && \
+    # TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
     #!  mmcv version must be changed when torch version changes
     TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0;8.6" FORCE_CUDA="1" $PIP_INSTALL mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html && \
@@ -199,7 +199,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         lightning-bolts \
         seaborn \
         # vissl \
-        horovod \
+        # horovod \
         timm \
         'git+https://github.com/facebookresearch/detectron2.git' \
         mmdet \
@@ -207,6 +207,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         torchmetrics \
         lightning-flash \
         lightning-transformers \
+        pyparsing==2.4.7 \
         && \
     
     
