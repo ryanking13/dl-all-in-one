@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.3.1-cudnn8-devel-ubuntu18.04
 ENV LANG C.UTF-8
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     PIP_INSTALL="python -m pip --no-cache-dir --use-deprecated=legacy-resolver install --upgrade " && \
@@ -141,10 +141,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         && \
 
     $PIP_INSTALL \
-        torch==1.7.1+cu110 \
-        torchvision==0.8.2+cu110 \
-        torchaudio===0.7.2 \
-        -f https://download.pytorch.org/whl/torch_stable.html \
+        torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113 \
         && \
 
 # ==================================================================
@@ -152,7 +149,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 # ------------------------------------------------------------------
 
     $PIP_INSTALL \
-        tensorflow==2.4.1 \
+        tensorflow \
         && \
 
 # ==================================================================
@@ -195,9 +192,9 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" $PIP_INSTALL --disable-pip-version-check --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
 
     #!  mmcv version must be changed when torch version changes
-    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" $PIP_INSTALL mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html && \
+    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0;8.6" FORCE_CUDA="1" $PIP_INSTALL mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html && \
 
-    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0" FORCE_CUDA="1" HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
+    TORCH_CUDA_ARCH_LIST="6.0;6.1;6.2;7.0;7.5;8.0;8.6" FORCE_CUDA="1" HOROVOD_GPU_OPERATIONS=NCCL $PIP_INSTALL \
         pytorch-lightning \
         lightning-bolts \
         seaborn \
@@ -206,7 +203,13 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         timm \
         'git+https://github.com/facebookresearch/detectron2.git' \
         mmdet \
+        'git+https://github.com/microsoft/otdd.git' \
+        torchmetrics \
+        lightning-flash \
+        lightning-transformers \
         && \
+    
+    
 
 # ==================================================================
 # Additional Tools (ML)
