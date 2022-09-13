@@ -208,6 +208,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         lightning-flash \
         lightning-transformers \
         pyparsing==2.4.7 \
+        'git+https://github.com/rwightman/efficientdet-pytorch' \
         && \
     
     
@@ -222,9 +223,12 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 
     $PIP_INSTALL \
         cityscapesscripts \
-        pycocotools \
         gpustat \
         && \
+    
+    $PIP_INSTALL \
+        pycocotools --no-binary pycocotools --no-build-isolation \
+        &&
 
 # ==================================================================
 # config & cleanup
