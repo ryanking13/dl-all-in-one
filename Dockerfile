@@ -227,8 +227,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         && \
     
     $PIP_INSTALL \
-        pycocotools --no-binary pycocotools --no-build-isolation \
-        &&
+        --no-binary pycocotools --no-build-isolation pycocotools \
+        && \
 
 # ==================================================================
 # config & cleanup
