@@ -198,6 +198,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         pytorch-lightning \
         lightning-bolts \
         seaborn \
+        shapely \
+        transformers \
         # vissl \
         # horovod \
         timm \
